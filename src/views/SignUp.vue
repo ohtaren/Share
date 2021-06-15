@@ -16,9 +16,37 @@
 
 <script>
 import HeaderAuth from "../components/HeaderAuth";
+import axios from "axios";
+
 export default {
+  data() {
+    return {
+      name: "",
+      profile: "",
+      email: "",
+      password: ""
+    };
+  },
   components: {
     HeaderAuth
+  },
+  methods: {
+    auth() {
+      axios
+        .post("https://reverent-leakey-deb3ce.netlify.app/api/register", {
+          name: this.name,
+          profile: this.profile,
+          email: this.email,
+          password: this.password
+        })
+        .then(response => {
+          console.log(response);
+          this.$router.replace("/");
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
   }
 };
 </script>

@@ -29,14 +29,30 @@ export default {
   data() {
     return {
       active: true,
-      name: "太郎",
-      profile: "私は太郎です"
+      name:  this.$store.state.user.name,
+      profile:  this.$store.state.user.profile,
     };
+  },
+  methods: {
+    edit() {
+      if (!this.active) {
+        axios
+          .put("https://reverent-leakey-deb3ce.netlify.app/api/user", {
+            email: this.$store.state.user.email,
+            profile: this.profile,
+          })
+          .then((response) => {
+            this.$store.commit("changeUserData", this.profile);
+            console.log(response);
+          });
+      }
+      this.active = !this.active;
+    },
   },
   components: {
     SideNavi,
-    Message
-  }
+    Message,
+  },
 };
 </script>
 
